@@ -1,11 +1,31 @@
 import json
-
+import pandas as pd 
+import requests
+import io
 # modify credentials.json.sample
 cred = json.load(open('credentials.json'))
 
 username = cred['username']
 api_key  = cred['api_key']
 
+#input_data_url = 'https://team.carto.com/u/sheehan-carto/dataset/yellow_tripdata_2015_04_verysmall'
+
+username1  = 'sheehan-carto'
+tablename = 'yellow_tripdata_2015_04_verysmall'
+
+#url = "http://"+cartodb_domain+".cartodb.com/api/v2/sql?q=SELECT%20*%20FROM%20"+tablename+"&format=csv&api_key="+API_KEY
+
+data_url = "https://%s.carto.com/api/v2/sql?q=SELECT * FROM %s&format=csv" % (username1 , tablename)
+data_url = 'https://sheehan-carto.carto.com/api/v2/sql?q=SELECT * FROM yellow_tripdata_2015_04_verysmall&format=csv'
+print data_url
+
+url=data_url
+s=requests.get(url).content
+df=pd.read_csv(io.StringIO(s.decode('utf-8')))
+
+#df = pd.read_csv(data_url)
+
+print df.head(10)
 
 # 2:30 - 3 pm - Getting setup (CARTO accounts, API keys, programming environment, etc.)
 # HOWTO
