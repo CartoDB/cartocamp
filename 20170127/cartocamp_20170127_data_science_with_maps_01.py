@@ -2,6 +2,9 @@ import json
 import pandas as pd 
 import requests
 import io
+import os
+import shutil
+
 # modify credentials.json.sample
 cred = json.load(open('credentials.json'))
 
@@ -39,7 +42,28 @@ url=data_url
 s=requests.get(url).content
 df=pd.read_csv(io.StringIO(s.decode('utf-8')))
 
+df = df.rename(columns=lambda x: x.replace('geoid', 'pickup_geoid'))
 #df = pd.read_csv(data_url)
 
 print df.head(10)
+
+dfp = df[['pickup_geoid']]
+dfp['count'] = 1
+dfp = dfp.groupby(['pickup_geoid'],as_index=False).sum()
+
+print dfp.head(10)
+
+if not os.path.exists('temp'):
+    os.makedirs('temp')
+
+dfp.to_csv('temp/pickup_geoid.csv', index=False)
+
+
+os.system('curl -v -F file=@temp/pickup_geoid.csv "https://sheehan-carto.carto.com/api/v1/imports/?api_key="'+api_key)
+
+try:
+    shutil.rmtree('temp')
+except:
+    raise
+
 
