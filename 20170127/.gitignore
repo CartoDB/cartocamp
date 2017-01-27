@@ -4,3 +4,4 @@ credentials.json
 env/*
 *checkpoint.ipynb
 temp/*
+yellow_tripdata_2015-04.csv
