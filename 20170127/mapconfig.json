@@ -1,6 +1,6 @@
 {
   "version": "0.0.1",
-  "name": "map-config-test",
+  "name": "taxi_test1",
   "auth": {
     "method": "open"
   },
@@ -9,7 +9,7 @@
       "type": "mapnik",
       "options": {
         "cartocss_version": "2.1.1",
-        "cartocss": "#layer { polygon-fill: #FFF; }",
+        "cartocss": "#layer {polygon-fill: ramp([count_pickup], (#fbe6c5, #f2a28a, #dc7176, #b24b65, #70284a), quantiles); line-width: 1; line-color: #FFF; line-opacity: 0.5;}",
         "sql": "select * from yellow_pickups_by_tract_2015_04_15_n_3000"
       }
     }]
