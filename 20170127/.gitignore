@@ -6,3 +6,4 @@ env/*
 temp/*
 yellow_tripdata_2015-04.csv
 *.csv
+credentials_nygeog.json
